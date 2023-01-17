@@ -40,7 +40,7 @@ def alarm(hours, minutes):
 
 
 root = tk.Tk()
-root.geometry("350x400")
+root.geometry("350x100")
 root.resizable(width = False, height = False)
 root.title("Alarm Clock")
 t = Label(root, font = ("Helvetica", 14), fg='#000')
