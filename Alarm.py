@@ -6,7 +6,9 @@ from tkinter import *
 from playsound import playsound
 
 def abh():
-	
+	t = threading.Thread(target=alarm, args=(min_var.get(), hour_var.get()))
+	t.start()
+	return 0
 
 def tbh(): #Button to handle timer thread to prevent GUI from freezing.
 	seconds = int(name_var.get())
@@ -29,12 +31,16 @@ def timer(seconds):
 	playsound('C:/Windows/Media/Alarm01.wav')
 
 
-def alarm():
-	sleep(0)
+def alarm(hours, minutes):
+	while True:
+		if time.strftime("%H") == hours and time.strftime("%M") == minutes:
+			playsound('C:/Windows/Media/Alarm02.wav')
+			return 0
+		time.sleep(1)
 
 
 root = tk.Tk()
-root.geometry("300x400")
+root.geometry("350x400")
 root.resizable(width = False, height = False)
 root.title("Alarm Clock")
 t = Label(root, font = ("Helvetica", 14), fg='#000')
@@ -51,11 +57,12 @@ tb.grid(row = 2, column = 0, padx = 0)
 #GUI elements for spinboxes and alarm
 min_var = tk.StringVar()
 hour_var = tk.StringVar()
-msb = Spinbox(root, from_ = 0, to = 60, increment = 1, state='readonly', wrap = True, texvariable = min_var)
+msb = Spinbox(root, from_ = 0, to = 24, increment = 1, state='readonly', wrap = True, textvariable = min_var)
 msb.grid(row = 4, column =1, padx = 5)
-hsb = Spinbox(root, from_ = 0, to = 60, increment = 1, state='readonly', wrap = True, texvariable = hour_var)
+hsb = Spinbox(root, from_ = 0, to = 60, increment = 1, state='readonly', wrap = True, textvariable = hour_var)
 hsb.grid(row = 4, column =2, padx = 5)
 ab = Button(root, text = "Alarm", command = lambda: abh())
+ab.grid(row = 4, column = 0, padx = 5)
 
 clock()
 mainloop()
